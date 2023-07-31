@@ -1,0 +1,180 @@
+iam----role----aws service, step function------
+
+Step Functions
+Allows Step Functions to access AWS resources on your behalf.
+
+policy: AWSLambdaRole
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+
+trust re;ationship:
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "states.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+
+
+role name: stepfunction-lambda-role  (on behalf of you, step function access lambda)
+----------------------------------------------------------------------------------------------------------
+step fun-----state machine----write your workflow in code------
+
+standard:
+
+{
+  "Comment": "A simple AWS Step Functions state machine that automates a call center support session.",
+  "StartAt": "Open Case",
+  "States": {
+    "Open Case": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:291222035571:function:OpenCaseFunction",
+        "Next": "Assign Case"
+   },
+   "Assign Case": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:291222035571:function:AssignCaseFunction",
+        "Next": "Work on Case"
+   },
+   "Work on Case":{
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:291222035571:function:WorkOnCaseFunction",
+        "Next": "Is Case Resolved"
+   },
+   "Is Case Resolved": {
+        "Type" : "Choice",
+        "Choices": [
+            {
+             "Variable": "$.Status",
+             "NumericEquals": 1,
+             "Next": "Close Case"
+            },
+            {
+             "Variable": "$.Status",
+             "NumericEquals": 0,
+             "Next": "Escalate Case"
+            }
+        ]
+   },
+   "Close Case": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:291222035571:function:CloseCaseFunction",
+        "End": true
+  },
+   "Escalate Case": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:291222035571:function:EscalateCaseFunction",
+        "Next": "Fail"
+  },
+    "Fail": {
+        "Type": "Fail",
+        "Cause": "Engage Tier 2 Support." }
+  }
+}
+----------------------------------------------------------------------
+b. Select Author from scratch.
+
+c. Configure your first Lambda function with these settings :
+
+Name – OpenCaseFunction.
+
+Runtime – Node.js 16.x.
+
+Execution role – Create a new role with basic Lambda permissions
+
+d. Choose Create function.
+
+
+exports.handler = (event, context, callback) => {
+    // Create a support case using the input as the case ID, then return a confirmation message   
+   var myCaseID = event.inputCaseID;
+   var myMessage = "Case " + myCaseID + ": opened...";   
+   var result = {Case: myCaseID, Message: myMessage};
+   callback(null, result);    
+};
+
+--------------------------------------------------------
+function-----AssignCaseFunction, node16.x
+
+exports.handler = (event, context, callback) => {    
+    // Assign the support case and update the status message    
+    var myCaseID = event.Case;    
+    var myMessage = event.Message + "assigned...";    
+    var result = {Case: myCaseID, Message: myMessage};
+    callback(null, result);        
+};
+----------------------------------------------------------------
+function---WorkOnCaseFunction, node16.x
+
+exports.handler = (event, context, callback) => {    
+    // Generate a random number to determine whether the support case has been resolved, then return that value along with the updated message.
+    var min = 0;
+    var max = 1;    
+    var myCaseStatus = Math.floor(Math.random() * (max - min + 1)) + min;
+    var myCaseID = event.Case;
+    var myMessage = event.Message;
+    if (myCaseStatus == 1) {
+        // Support case has been resolved    
+        myMessage = myMessage + "resolved...";
+    } else if (myCaseStatus == 0) {
+        // Support case is still open
+        myMessage = myMessage + "unresolved...";
+    } 
+    var result = {Case: myCaseID, Status : myCaseStatus, Message: myMessage};
+    callback(null, result); 
+};
+---------------------------------------------------------------------------------
+function-----CloseCaseFunction, node 16.x
+exports.handler = (event, context, callback) => { 
+    // Close the support case    
+    var myCaseStatus = event.Status;    
+    var myCaseID = event.Case;    
+    var myMessage = event.Message + "closed.";    
+    var result = {Case: myCaseID, Status : myCaseStatus, Message: myMessage};
+    callback(null, result);
+};
+-----------------------------------------------------
+function-----EscalateCaseFunction, node16.x
+
+exports.handler = (event, context, callback) => {    
+    // Escalate the support case 
+    var myCaseID = event.Case;    
+    var myCaseStatus = event.Status;    
+    var myMessage = event.Message + "escalating.";    
+    var result = {Case: myCaseID, Status : myCaseStatus, Message: myMessage};
+    callback(null, result);
+};
+-------------------------------------------------------------
+start execution:
+
+{
+  "inputCaseID": "001"
+}
+--------------------------------------------------------------------
+.MJS file
+
+mjs an extension for EcmaScript modules
+An MJS file is a source code file containing an ES Module (ECMAScript Module) for use with a Node.js application.
+MJS files are written in JavaScript, and may also use the .JS extension outside of the Node.js context.
+
+ES Modules allow web and application developers to organize code into smaller reusable components.
+-------------------------------------------------------------------------------------------
