@@ -20,4 +20,48 @@ If your environments no longer require EC2 instances that block incoming traffic
 
 create
 --------------------------------------------------------------------------------------------------------------------------
+ubuntu:~/environment $ 
+ubuntu:~/environment $ python --version
+Python 3.10.6
+
+Type the following command to check if pip is installed
+
+ubuntu:~/environment $ python -m pip --version
+pip 22.0.2 from /usr/lib/python3/dist-packages/pip (python 3.10)
+
+pip is a Python tool for installing packages.
+
+-----------------------------------------------------------------------------------------
+let i need pip3 and install in my aws cloud9 ubuntu inst
+
+ubuntu:~/environment $sudo apt update
+ubuntu:~/environment $ sudo apt-get -y install python3-pip
+ubuntu:~/environment $ pip3 --version
+pip 22.0.2 from /usr/lib/python3/dist-packages/pip (python 3.10)
+
+----------------------------------------------------------------------------------------
+let i install boto3
+Type the following command to install AWS SDK for Python (Boto3).
+
+ubuntu:~/environment $ sudo python3 -m pip install boto3
+
+Type the following command to check if Boto3 is installed.
+
+ubuntu:~/environment $ python3 -m pip show boto3
+Name: boto3
+Version: 1.28.15
+Summary: The AWS SDK for Python
+Home-page: https://github.com/boto/boto3
+Author: Amazon Web Services
+Author-email: 
+License: Apache License 2.0
+Location: /usr/local/lib/python3.10/dist-packages
+Requires: botocore, jmespath, s3transfer
+Required-by: 
+----------------------------------------------------------------------------------------------
+Go back to your Cloud9 Environment.
+
+Go to File -> New File in the Menu bar at the top of screen.
+
+
 
