@@ -58,10 +58,33 @@ License: Apache License 2.0
 Location: /usr/local/lib/python3.10/dist-packages
 Requires: botocore, jmespath, s3transfer
 Required-by: 
+----------------------------------------mysql-connector----------------------------------
+ubuntu:~/environment $ pip3 install mysql-connector-python
+
 ----------------------------------------------------------------------------------------------
 Go back to your Cloud9 Environment.
 
 Go to File -> New File in the Menu bar at the top of screen.
 
+import boto3
+
+s3 = boto3.client('s3')
+s3.create_bucket(Bucket='som9437557886')
 
 
+Save this file (Ctrl+S) by name of app.py
+-----------------------------------------------------------------------------------------------
+Run -> Run Configuration -> New Run Configuration.
+
+choose:runner: python3
+command: app.py us-east-1
+
+click: run
+--------------------------------------------------------------------------------------------
+if Env parameter to pass
+ENV:
+Key             VALUE
+DB_HOST	     proxy1.proxy-cjy9ii6a47cp.us-east-1.rds.amazonaws.com
+DB_NAME	     ecomdb
+DB_USER	     ecomuser
+-----------------------------------------------------------------------------------------
