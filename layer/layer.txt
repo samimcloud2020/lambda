@@ -1,1 +1,7 @@
+ADD THE "CUSTOM LAYER" TO YOUR FUNCTION.
 
+---------------------------------------------------
+*Limitations:
+A Lambda function can use up to 5 layers at a time, 
+however, the total unzipped size of the function and all layers can’t exceed 250 MB.
+------------------------------------------------------------------------------------
