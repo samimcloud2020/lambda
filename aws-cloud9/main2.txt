@@ -1,0 +1,35 @@
+ubuntu:~/environment $ python3 --version
+Python 3.10.6
+
+ubuntu:~/environment $ python2 --version
+Python 2.7.18
+
+If python isn’t installed, run the following commands to install Python 2.7 and Python 3.6
+
+sudo apt -y update
+
+sudo apt install -y python27
+
+sudo apt install -y python36
+---------------------------------------------------------------------------------------------
+ubuntu:~/environment $ python --version
+Python 3.10.6
+
+Ensure virtualenv is installed.
+ubuntu:~/environment $ virtualenv --version
+16.2.0
+
+ubuntu:~/environment $ which python
+/usr/bin/python  <----$cd /usr/bin   $ls and see which python are installed
+
+ubuntu:/usr/bin $ which python3.10
+/usr/bin/python3.10
+
+----------------------------------------------------------------------------------------------------
+Switch to the environments directory
+ubuntu:/usr/bin $ cd ~/environment/
+
+ubuntu:~/environment $ ls
+README.md  app.py
+
+
