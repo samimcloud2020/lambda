@@ -34,5 +34,38 @@ ubuntu:~ $ python --version
 Python 3.9.17   <-------------------now i am in python 3.9
 ---------------------------------------------------------------------------------------------------
 
+HOW TO PACAGE IN AWS CLOUD9--------------------------->
 
 
+$cd ~/environment
+$ls
+app.py
+root@SDOP_Ts:~/environment# python3.9 -m venv env39
+root@SDOP_Ts:~/environment# ls
+app.py  env39
+
+root@SDOP_Ts:~/environment# source ./my_virtual_env/bin/activate
+(env39) root@SDOP_Ts:~/environment#
+(env39) root@SDOP_Ts:~/environment# pip3 install mysql-connector-python
+(env39) root@SDOP_Ts:~/environment# pip3 show mysql-connector-python
+
+(env39) root@SDOP_Ts:~/environment# deactivate
+root@SDOP_Ts:~/environment#
+
+root@SDOP_Ts:~/environment# cd cd /home/ubuntu/environment/vpy39/lib/python3.9/site-packages <---
+root@SDOP_Ts:/home/ubuntu/environment/vpy39/lib/python3.9/site-packages#
+
+root@SDOP_Ts:/home/ubuntu/environment/vpy39/lib/python3.9/site-packages# zip -r ../../../../my_deployment_package.zip .
+
+
+root@SDOP_Ts:/home/ubuntu/environment/vpy39/lib/python3.9/site-packages# cd ../../../../   <----parent dir
+root@SDOP_Ts:~/environment#
+
+
+root@SDOP_Ts:~/environment# zip my_deployment_package.zip app.py
+  adding: app.py (deflated 51%)
+root@SDOP_Ts:~/my_function# ls
+app.py  my_deployment_package.zip  my_virtual_env
+
+$aws s3 cp my_deployment_package.zip  s3://som123456/1.zip
+--------------------------------------------------------------------------------------------------------------------------
