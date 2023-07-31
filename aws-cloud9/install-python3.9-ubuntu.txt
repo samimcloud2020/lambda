@@ -1,0 +1,19 @@
+Installing Python 3.9 on Ubuntu with Apt
+Python 3.9 installation on Ubuntu with apt is a simple process that takes only a few minutes to complete.
+
+1) Install the prerequisites and update the package list:
+
+sudo apt update
+sudo apt install software-properties-common
+2) Add the deadsnakes PPA to the sources list of your system:
+
+sudo add-apt-repository ppa:deadsnakes/ppa
+3) To proceed, press Enter when prompted. Once the repository is enabled, run the following command to install Python 3.9:
+
+sudo apt install python3.9
+4) Verify that the installation was successful by typing:
+
+python3.9 --version
+Output
+Python 3.9.1+
+That’s it. Python 3.9 is installed on your Ubuntu system, and you can start using it.
