@@ -1,0 +1,23 @@
+aws cloud9-----create env---->
+new ec2/existing compute
+ins type: t2.micro
+amazon linux 2/ubuntu
+timeout: 30 min
+con: ssm/ssh
+vpc: default
+subnet: us-east-1a
+
+The following IAM resources will be created in your account:------------
+  
+AWSServiceRoleForAWSCloud9 - 
+AWS Cloud9 creates a service-linked role for you. 
+This allows AWS Cloud9 to call other AWS services on your behalf. You can delete the role from the
+AWS IAM console once you no longer have any AWS Cloud9 environments. 
+
+AWSCloud9SSMAccessRole and AWSCloud9SSMInstanceProfile - 
+A service role and an instance profile are automatically created if Cloud9 accesses its EC2 instance through AWS Systems Manager.
+If your environments no longer require EC2 instances that block incoming traffic, you can delete these roles using the AWS IAM console.
+
+create
+--------------------------------------------------------------------------------------------------------------------------
+
