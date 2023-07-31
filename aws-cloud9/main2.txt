@@ -32,4 +32,27 @@ ubuntu:/usr/bin $ cd ~/environment/
 ubuntu:~/environment $ ls
 README.md  app.py
 
+sudo apt install python3.9-distutils -y  <-----as per python version needed 3.6,3.9 etc
 
+Create a new virtual environment and configure it to use Python 3.9
+virtualenv -p /usr/bin/python39 vpy39
+
+ubuntu:~/environment $ ls
+README.md  app.py  vpy39
+
+In the virtual environment, switch to Python 3.9
+ubuntu:~/environment $ source vpy39/bin/activate
+(vpy39) ubuntu:~/environment $ 
+
+Verify Python in the virtual environment is configured to use version 3.9
+(vpy39) ubuntu:~/environment $ python --version
+Python 3.9.17
+(vpy39) ubuntu:~/environment $
+
+-----------------------------------------------------------------------------------------
+Deactivate the virtual environment
+(vpy39) ubuntu:~/environment $deactivate
+-----------------------------------------------------------------------------------------
+Re-create alias for Python
+ubuntu:~/environment $alias python=/usr/bin/python3.10
+----------------------------------------------------------------------------------------
