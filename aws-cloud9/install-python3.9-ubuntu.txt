@@ -17,3 +17,22 @@ python3.9 --version
 Output
 Python 3.9.1+
 That’s it. Python 3.9 is installed on your Ubuntu system, and you can start using it.
+------------------------------------------------------------------------------------------
+ubuntu:~ $ python --version
+Python 3.10.6
+------------------------------------------------------------------------------------------
+ubuntu:~ $ ls /usr/bin/python*
+/usr/bin/python   /usr/bin/python2-config  /usr/bin/python2.7-config  /usr/bin/python3-config  /usr/bin/python3.10-config
+/usr/bin/python2  /usr/bin/python2.7       /usr/bin/python3           /usr/bin/python3.10      /usr/bin/python3.9
+-----------------------------------------------------------------------------------------------------
+sudo vim ~/.bashrc
+alias python='/usr/bin/python3.9'
+
+------------------------------------------------------------------------------------------------------
+ubuntu:~ $ source ~/.bashrc
+ubuntu:~ $ python --version                                                                                                     
+Python 3.9.17   <-------------------now i am in python 3.9
+---------------------------------------------------------------------------------------------------
+
+
+
