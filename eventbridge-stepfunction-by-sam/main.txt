@@ -1,0 +1,61 @@
+EVENTBRIDGE--------------->STEP FUNCTION
+#################################################################################################################
+
+Create an EventBridge rule that triggers a Step Functions workflow
+
+This pattern demonstrates running a Step Functions workflow using an EventBridge rule.
+
+The template creates a shell Step Functions workflow with a CloudWatch log group for error reporting.
+
+It is triggered on select EC2 instance state changes and branches based on the value.
+####################################################################################################################
+>git clone https://github.com/aws-samples/serverless-patterns/ 
+>cd serverless-patterns/eventbridge-sfn
+
+
+LET Deploy
+
+>sam deploy --guided
+
+
+Delete the stack: 
+>sam delete --stack-name STACK_NAME
+####################################################################################################################
+>sam package --template-file template.yaml --output-template-file deploy.yaml --s3-bucket somesh123456
+
+>sam deploy --template-file ~/deploy.yaml --stack-name stack1
+
+OR
+
+>sam deploy --template-file ~/deploy.yaml --stack-name stack1 --capabilities CAPABILITY_IAM
+
+####################################################################################################################
+As you can see, the sam-package takes in the following three arguments.
+
+Template File – 
+    This is the template file that we have configured in our previous steps while running the application locally.
+    
+Output Template File – 
+    This is the output of the sam-package, which will generate the final deployment configurations for us, 
+    and this can be used to deploy the resources to the Cloud Formation Stack
+    
+S3 Bucket – 
+    This is the name of the bucket in S3, where the zip of the application will be uploaded. 
+    The URL for this zip file will be updated in the output deployment configuration file.
+
+#############################################################################################################################  
+AWS SAM CLI – 
+    In order to develop and test the applications locally, you need to install the AWS SAM CLI on your machine. 
+    The AWS SAM CLI will provide an AWS Lambda like execution environment using which you can run your code locally and get the output.
+
+###############################################################################################################################
+Python – python –version
+AWS CLI – aws –version
+AWS SAM CLI – sam –version
+Docker – Docker –version
+###############################################################################################################################
+
+
+
+
+
