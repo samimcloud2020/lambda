@@ -1,0 +1,22 @@
+Method	                           Works for	                             Cost
+------                   ------------------------------------     --------------------------
+NAT Gateway	-           Any AWS service or third-party service	     - $0.045/hr (~$33.50 monthly)
+
+                                                                     - $0.045/GB processing  
+
+
+VPC gateway endpoint	-           Amazon S3                             none
+                                  dynamodb
+
+VPC interface endpoint        - 66 different AWS services,                  - $0.01/hr per endpoint per AZ (~$7.45 monthly)
+                                  including Amazon CloudWatch,              - $0.01/GB processing    
+                            Kinesis Firehose, SNS, SQS, and SSM.
+
+Amazon CloudWatch           	- Amazon CloudWatch only	                      None
+Embedded Metric Format
+
+
+Lambda Destinations          - Amazon SNS                                     none
+                             - Amazon SQS
+                             - Amazon EventBridge
+                             But: only for asynchronous Lambda invocation results
