@@ -1,9 +1,9 @@
+
 import json
 import boto3
 import base64
 from botocore.exceptions import ClientError
 import pymysql
-from mysql.connector import Error as mysql_error
 import os
 import logging
 
@@ -65,6 +65,10 @@ def lambda_handler(event, context):
     # TODO implement
     credentials = json.loads(get_secret())
     print(credentials)
+    
+    
+    os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
+
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
@@ -72,14 +76,15 @@ def lambda_handler(event, context):
 
     rds_client = boto3.client('rds')
     database_token = rds_client.generate_db_auth_token(
-        hostname = credentials['host'],
-        dbname = credentials['dbname'],
-        port = int(credentials['port']),
-        username = credentials['username'],
-        password = credentials['password']        
+        DBHostname=credentials['host'],
+        Port=int(credentials['port']),
+        DBUsername=credentials['username'],
+        Region='us-east-1'
+             
     )
 
     logging.info('Token successfully obtained. Connecting to database...')
+    print(database_token)
 
 
   
@@ -94,7 +99,8 @@ def lambda_handler(event, context):
         database=dbname,
         port=port,
         user=username,
-        password=database_token
+        passwd=database_token,
+        ssl_ca='global-bundle.pem'
         )
 
     cur = conn.cursor()
@@ -109,4 +115,12 @@ def lambda_handler(event, context):
 if __name__ == "__main__" :
     mysqlconnect()   
     
+        
+   
+
+
+
+ 
+
+ 
         
