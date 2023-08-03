@@ -19,3 +19,155 @@ client = boto3.client(‘secretsmanager’, endpoint_url=os.environ[‘SECRETS_M
 
 Finally, ensure your Secrets Manager endpoint VPC subnet configuration matches the subnet configuration you set up for your lambda function. 
 Otherwise, you’ll Lambda function will timeout waiting to connect to the Secrets Manager to get/write your secrets.
+-------------------------------------------------------------------------------
+The following example policy grants access to all users and roles in account 291222035571.
+
+{
+  "Statement": [
+    {
+      "Sid": "AccessSpecificAccount",
+      "Principal": {"AWS": "291222035571"},
+      "Action": "secretsmanager:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+
+
+The following example policy restricts access to one specified secret.
+
+{
+  "Statement": [
+    {
+      "Principal": "*",
+      "Action": "secretsmanager:*",
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:secretsmanager:us-east-1:291222035571:secret:secret2"
+      ]
+    }
+  ]
+}  
+
+secretmanager-vpcendpoint-1
+vpce-08ec9676d17a08e64	vpc-00817a61882d246a5	com.amazonaws.us-east-1.secretsmanager	Interface		2 network interfaces	2 subnets	–
+
+Service name
+com.amazonaws.us-east-1.secretsmanager
+
+DNS names
+vpce-08ec9676d17a08e64-r8y82fvm.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+vpce-08ec9676d17a08e64-r8y82fvm-us-east-1a.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+vpce-08ec9676d17a08e64-r8y82fvm-us-east-1b.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+secretsmanager.us-east-1.amazonaws.com
+- (Z0584884964HKOFT93N1)
+
+
+Endpoint type
+Interface
+
+Private DNS names enabled
+Yes
+
+Private DNS names
+secretsmanager.us-east-1.amazonaws.com
+
+subnet-008c68d53e9bd02cf (private-subnet-2)	us-east-1b (use1-az2)	172.31.124.171	–	eni-014affea8674a1aa4  	–
+subnet-00904114b58a77ad5 (private-subnet-1)	us-east-1a (use1-az1)	172.31.108.72	–eni-05db4a5a8c7931302 
+
+ENI:
+Network interface details
+
+Network interface ID
+eni-014affea8674a1aa4
+
+Name
+-
+Description
+VPC Endpoint Interface vpce-08ec9676d17a08e64
+
+Network interface status
+In-use
+
+Interface type
+vpc_endpoint
+
+Security groups
+sg-04719b2e5747715ef (default)
+
+VPC ID
+vpc-00817a61882d246a5 
+
+Subnet ID
+subnet-008c68d53e9bd02cf 
+
+Availability Zone
+us-east-1b
+
+Owner
+291222035571
+
+Requester ID
+727180483921
+
+Requester-managed
+True
+
+Source/dest. check
+True
+
+IP addresses
+Private IPv4 address
+172.31.124.171
+
+Private IPv4 DNS
+ip-172-31-124-171.ec2.internal
+
+Elastic Fabric Adapter
+False
+
+Public IPv4 address
+-
+Public IPv4 DNS
+-
+IPv6 addresses
+-
+Secondary private IPv4 addresses
+-
+Association ID
+-
+Elastic IP address owner
+-
+MAC address
+12:82:2d:c7:87:0f
+
+IPv4 Prefix Delegation
+-
+IPv6 Prefix Delegation
+-
+Instance details
+Instance ID
+-
+Instance owner
+amazon-aws
+
+Device index
+1
+Allocation ID
+-
+Network interface attachment
+Attachment status
+Attached
+Attachment ID
+ela-attach-0be137a918dde3e9c
+
+Attachment time
+-
+Delete on termination
+False
+
+-------------------------------------------------------------------------------------------------------------------------
