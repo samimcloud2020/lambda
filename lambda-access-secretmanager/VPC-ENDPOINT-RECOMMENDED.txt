@@ -129,6 +129,17 @@ vpc id: vpc-00817a61882d246a5     DNS hostnames: enabled DNS        resolution: 
   ]
 }  
 -----------------------------------------------------------------------------------------------------------------
+subnet-01b5f98c066f2f884	us-east-1c (use1-az4)	172.31.23.4	–	eni-0fdeba25e11a577aa  	–
+subnet-0f0e283b1b490e5d1	us-east-1d (use1-az6)	172.31.46.30	–	eni-047528f3ee14014c7  	–
+subnet-062ac4058a80adee1	us-east-1a (use1-az1)	172.31.1.76	–	eni-0ccced71b5a23b2cc  	–
+subnet-0fbfc73525169a2de	us-east-1b (use1-az2)	172.31.81.10	–	eni-0ca4011a0921daa51  	–
+
+EACH SUBNET WITH A ENI WITH PRIVATEIP
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
 We create an endpoint network interface in each subnet that you select.
 
 DNS name
