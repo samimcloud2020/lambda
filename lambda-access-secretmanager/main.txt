@@ -1,0 +1,38 @@
+#######################################################LAMBDA GENERAL INFORMATION #######################################################
+Lambda functions run in a secure Amazon VPC with access to AWS services and the internet. 
+The Lambda service owns this Amazon VPC, and it isn’t connected to your default Amazon VPC.
+
+Lambda functions that are connected to your Amazon VPC can access the internet
+only when you configure your Amazon VPC to provide access.
+
+The network interfaces that Lambda creates within your Amazon VPC use private IP addresses 
+and can’t connect to the internet using an internet gateway.
+
+Note: 
+    It's a best practice not to place Lambda functions in an Amazon VPC 
+    unless the function must access other resources in the Amazon VPC.
+
+############################################case-1 with NAT GATEWAY ##############################################
+Give your function internet access by placing the function in private subnets and 
+routing the outbound traffic to a NAT gateway in a public subnet. 
+
+The NAT gateway has a public IP address and connects to the internet through the VPC's internet gateway.
+######################################### CASE-2 with VPC ENDPOINT ###############################################
+Set up an Amazon VPC interface endpoint for Secrets Manager. 
+Your Amazon VPC then connects Secrets Manager from your Lambda function without internet access. 
+Make sure that the Amazon VPC endpoint security group allows port 443 inbound traffic from the Lambda security group or IP address range. 
+And, the Lambda security group allows port 443 outbound traffic to the Amazon VPC endpoint security group or IP address range.
+###################################### CASE-3 AWS PRIVATELINK VPC ENDPOINT ##########################################
+Note: If you use AWS PrivateLink VPC endpoints, then make sure that you configure the 
+DHCP options with your Amazon VPC for Domain Name System (DNS). 
+
+###############################Lambda execution role permissions #####################################################
+Grant permissions to the Lambda execution role to access Secrets Manager secrets. 
+Use the GetSecretValue API call to get the Secrets Manager secret. 
+
+#############################(Optional) AWS Key Management Service (AWS KMS) permissions###############################
+If the Secrets Manager secret is encrypted with an AWS KMS customer managed key instead of the managed key aws/secretsmanager, 
+then additional configuration is required. 
+
+Make sure to allow the Decrypt API action permission as either the Lambda execution role or the AWS KMS key policy.
+########################################################################################################################
