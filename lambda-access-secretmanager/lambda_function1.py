@@ -56,16 +56,16 @@ def get_secret():
             secret = get_secret_value_response['SecretString']
         else:
             secret = base64.b64decode(get_secret_value_response['SecretBinary'])
-        return secret
-
+        return secret  # returns the secret as dictionary
+        
 def lambda_handler(event, context):
 
     # TODO implement
     credentials = json.loads(get_secret())
-    #print(credentials)
+    print(credentials)
     hostname = credentials['host']
     dbname = credentials['dbname']
-    port = credentials['port']
+    port = int(credentials['port'])
     username = credentials['username']
     password = credentials['password']
 
@@ -85,8 +85,12 @@ def lambda_handler(event, context):
     # To close the connection
     conn.close()
     
-   
-    return {
-        'statusCode': 200,
-        'body': result
-    }
+# Driver Code
+if __name__ == "__main__" :
+    mysqlconnect()   
+    
+        
+
+
+
+
