@@ -55,14 +55,16 @@ ICMP message: Destination Unreachable: Fragmentation needed and Don't Fragment w
 
 VPC endpoints enforce Maximum Segment Size (MSS) clamping for all packets.
 ####################################################################################################################
-vpc----endpoint----create endpoint----service category----aws services----service name----com.amazonaws.us-east-1.secretsmanager
+INSIDE VPC[LAMBDA----->LAMBDA VPC ENDPOINT------->ALL AWS SERVICES(SECRET MANAGER)]
+
+vpc----endpoint----create endpoint----service category----aws services----service name----com.amazonaws.us-east-1.lambda
 owner:amazon  type:interface------>vpc(default)----enable dns name(in VPC: enable dns hostnames, enable dns support)----------
----dns record type(ipv4) (ipv4/ipv6/dual stack/service defined)-------subnet (select)(each subnet one endpoint n/w interface)------
+---dns record type(ipv4) (ipv4/ipv6/dual stack/service defined)-------private subnet (select)(each subnet one endpoint n/w interface)------
 ----ip type(ipv4)(ipv4/ipv6/dual stack)------sg(default)----policy (full aceess[any aws service accessed by endpoint interface or custom)-----
 ------create endpoint
 
 endpoint1
-vpce-0fb4840dc904e0876	vpc-00817a61882d246a5	com.amazonaws.us-east-1.secretsmanager	Available 	(4 network interfaces)  	(4 subnets)   (Route table	–)
+vpce-0fb4840dc904e0876	vpc-00817a61882d246a5	com.amazonaws.us-east-1.lambda	Available 	(2 network interfaces)  	(2 subnets)   (Route table	–)
 
 Endpoint ID
 vpce-0fb4840dc904e0876
@@ -86,21 +88,18 @@ IP address type
 ipv4
 
 Service name
-com.amazonaws.us-east-1.secretsmanager
-
+com.amazonaws.us-east-1.lambda
 DNS names
-vpce-0fb4840dc904e0876-cayjkgce.secretsmanager.us-east-1.vpce.amazonaws.com
+vpce-04b85985db9974701-407vtlpn.lambda.us-east-1.vpce.amazonaws.com
 - (Z7HUB22UULQXV)
-vpce-0fb4840dc904e0876-cayjkgce-us-east-1d.secretsmanager.us-east-1.vpce.amazonaws.com
+vpce-04b85985db9974701-407vtlpn-us-east-1b.lambda.us-east-1.vpce.amazonaws.com
 - (Z7HUB22UULQXV)
-vpce-0fb4840dc904e0876-cayjkgce-us-east-1b.secretsmanager.us-east-1.vpce.amazonaws.com
+vpce-04b85985db9974701-407vtlpn-us-east-1a.lambda.us-east-1.vpce.amazonaws.com
 - (Z7HUB22UULQXV)
-vpce-0fb4840dc904e0876-cayjkgce-us-east-1c.secretsmanager.us-east-1.vpce.amazonaws.com
-- (Z7HUB22UULQXV)
-vpce-0fb4840dc904e0876-cayjkgce-us-east-1a.secretsmanager.us-east-1.vpce.amazonaws.com
-- (Z7HUB22UULQXV)
-secretsmanager.us-east-1.amazonaws.com
-- (Z05068231EVY1X718TJWT)
+lambda.us-east-1.amazonaws.com
+- (Z00405541NN3UO3TERC4P)
+lambda.us-east-1.api.aws
+- (Z0559071OMEFZ6V989NA)
 
 
 Endpoint type
@@ -110,7 +109,7 @@ Private DNS names enabled
 Yes
 
 Private DNS names
-secretsmanager.us-east-1.amazonaws.com
+lambda.us-east-1.amazonaws.com
 -----------------------------------------------------------------------------------------------------------
 vpc id: vpc-00817a61882d246a5     DNS hostnames: enabled DNS        resolution: enabled
 -----------------------------------------------------------------------------------------------------------
@@ -129,12 +128,11 @@ vpc id: vpc-00817a61882d246a5     DNS hostnames: enabled DNS        resolution: 
   ]
 }  
 -----------------------------------------------------------------------------------------------------------------
-subnet-01b5f98c066f2f884	us-east-1c (use1-az4)	172.31.23.4	–	eni-0fdeba25e11a577aa  	–
-subnet-0f0e283b1b490e5d1	us-east-1d (use1-az6)	172.31.46.30	–	eni-047528f3ee14014c7  	–
-subnet-062ac4058a80adee1	us-east-1a (use1-az1)	172.31.1.76	–	eni-0ccced71b5a23b2cc  	–
-subnet-0fbfc73525169a2de	us-east-1b (use1-az2)	172.31.81.10	–	eni-0ca4011a0921daa51  	–
+subnet-008c68d53e9bd02cf (private-subnet-2)	us-east-1b (use1-az2)	172.31.118.56	–	eni-0cc28419f1a684aee  	–
+subnet-00904114b58a77ad5 (private-subnet-1)	us-east-1a (use1-az1)	172.31.105.117	–	eni-078a9a2d54cc6f4b1  	–
 
-EACH SUBNET WITH A ENI WITH PRIVATEIP
+
+EACH private SUBNET WITH A ENI WITH PRIVATEIP
 -------------------------------------------------------------------------------------------------------------------
 
 
