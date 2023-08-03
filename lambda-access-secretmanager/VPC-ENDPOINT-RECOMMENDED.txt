@@ -55,16 +55,16 @@ ICMP message: Destination Unreachable: Fragmentation needed and Don't Fragment w
 
 VPC endpoints enforce Maximum Segment Size (MSS) clamping for all packets.
 ####################################################################################################################
-INSIDE VPC[LAMBDA----->LAMBDA VPC ENDPOINT------->ALL AWS SERVICES(SECRET MANAGER)]
+INSIDE VPC[LAMBDA----->SECRETMANAGER VPC ENDPOINT------->ALL AWS SERVICES(SECRET MANAGER)]
 
-vpc----endpoint----create endpoint----service category----aws services----service name----com.amazonaws.us-east-1.lambda
+vpc----endpoint----create endpoint----service category----aws services----service name----com.amazonaws.us-east-1.secretmanager
 owner:amazon  type:interface------>vpc(default)----enable dns name(in VPC: enable dns hostnames, enable dns support)----------
 ---dns record type(ipv4) (ipv4/ipv6/dual stack/service defined)-------private subnet (select)(each subnet one endpoint n/w interface)------
 ----ip type(ipv4)(ipv4/ipv6/dual stack)------sg(default)----policy (full aceess[any aws service accessed by endpoint interface or custom)-----
 ------create endpoint
 
 endpoint1
-vpce-0fb4840dc904e0876	vpc-00817a61882d246a5	com.amazonaws.us-east-1.lambda	Available 	(2 network interfaces)  	(2 subnets)   (Route table	–)
+vpce-0fb4840dc904e0876	vpc-00817a61882d246a5	com.amazonaws.us-east-1.secretmanager	Available 	(2 network interfaces)  	(2 subnets)   (Route table	–)
 
 Endpoint ID
 vpce-0fb4840dc904e0876
@@ -90,15 +90,15 @@ ipv4
 Service name
 com.amazonaws.us-east-1.lambda
 DNS names
-vpce-04b85985db9974701-407vtlpn.lambda.us-east-1.vpce.amazonaws.com
+vpce-04b85985db9974701-407vtlpn.secretmanager.us-east-1.vpce.amazonaws.com
 - (Z7HUB22UULQXV)
-vpce-04b85985db9974701-407vtlpn-us-east-1b.lambda.us-east-1.vpce.amazonaws.com
+vpce-04b85985db9974701-407vtlpn-us-east-1b.secretmanager.us-east-1.vpce.amazonaws.com
 - (Z7HUB22UULQXV)
-vpce-04b85985db9974701-407vtlpn-us-east-1a.lambda.us-east-1.vpce.amazonaws.com
+vpce-04b85985db9974701-407vtlpn-us-east-1a.secretmanager.us-east-1.vpce.amazonaws.com
 - (Z7HUB22UULQXV)
-lambda.us-east-1.amazonaws.com
+secretmanager.us-east-1.amazonaws.com
 - (Z00405541NN3UO3TERC4P)
-lambda.us-east-1.api.aws
+secretmanager.us-east-1.api.aws
 - (Z0559071OMEFZ6V989NA)
 
 
