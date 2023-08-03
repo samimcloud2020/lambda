@@ -10,8 +10,8 @@ import pymysql
 # https://aws.amazon.com/developers/getting-started/python/
 def get_secret():
 
-    secret_name = "pg/fleetdb/admin"
-    region_name = "us-west-2"
+    secret_name = "secret3"
+    region_name = "us-east-1"
 
     # Create a Secrets Manager client
     session = boto3.session.Session()
