@@ -114,7 +114,21 @@ secretsmanager.us-east-1.amazonaws.com
 -----------------------------------------------------------------------------------------------------------
 vpc id: vpc-00817a61882d246a5     DNS hostnames: enabled DNS        resolution: enabled
 -----------------------------------------------------------------------------------------------------------
-
+------------The following example policy restricts access to one specified secret.-------------------------
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Principal": "*",
+      "Action": "secretsmanager:*",
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:secretsmanager:us-east-1:291222035571:secret:secret1"
+      ]
+    }
+  ]
+}  
+-----------------------------------------------------------------------------------------------------------------
 We create an endpoint network interface in each subnet that you select.
 
 DNS name
