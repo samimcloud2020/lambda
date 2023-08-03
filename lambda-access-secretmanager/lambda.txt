@@ -1,0 +1,21 @@
+lambda env:
+
+SECRET_MANAGER_ENDPOINT        https://secretsmanager.us-east-1.amazonaws.com
+
+
+lambda_function.py
+client = boto3.client(‘secretsmanager’, endpoint_url=os.environ[‘SECRETS_MANAGER_ENDPOINT’])
+
+
+
+When you deploy an AWS Lambda function on a VPC, and you’re using Secrets Manager, remember these things:
+
+Create a VPC Endpoint for Secrets Manager a.k.a Secrets Manager interface endpoint in your lambda region (how?)
+
+Add a Lambda Environment variable “SECRET_MANAGER_ENDPOINT” and set it to https://secretsmanager.<your_region>.amazonaws.com
+
+Then when you set up the boto3.client connection, set it like this:
+client = boto3.client(‘secretsmanager’, endpoint_url=os.environ[‘SECRETS_MANAGER_ENDPOINT’])
+
+Finally, ensure your Secrets Manager endpoint VPC subnet configuration matches the subnet configuration you set up for your lambda function. 
+Otherwise, you’ll Lambda function will timeout waiting to connect to the Secrets Manager to get/write your secrets.
