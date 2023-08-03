@@ -1,0 +1,205 @@
+We recommend that you run as much of your infrastructure as possible on private networks 
+that are not accessible from the public internet. 
+
+You can establish a private connection between your VPC and Secrets Manager by creating an interface VPC endpoint.
+
+Interface endpoints are powered by AWS PrivateLink, a technology that enables you to privately access Secrets Manager APIs 
+without an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection.
+
+Instances in your VPC don't need public IP addresses to communicate with Secrets Manager APIs.
+
+Traffic between your VPC and Secrets Manager does not leave the AWS network.
+###############################################################################################################################
+#########Access an AWS service using an interface VPC endpoint ################################################################
+Deploy the resources that will access the AWS service in your VPC.
+
+To use private DNS, you must enable DNS hostnames and DNS resolution for your VPC. 
+
+To enable IPv6 for an interface endpoint, the AWS service must support access over IPv6.
+
+Create a security group that allows the resources in your VPC to communicate with the endpoint network interfaces for the VPC endpoint.
+To ensure that tools such as the AWS CLI can make requests over HTTPS from resources in the VPC to the AWS service, 
+the security group must allow inbound HTTPS traffic.
+
+If your resources are in a subnet with a network ACL, verify that the network ACL allows traffic
+between the endpoint network interfaces and the resources in the VPC.
+
+There are quotas on your AWS PrivateLink resources.
+####################################AWS PrivateLink quotas####################################################
+The following tables list the quotas, formerly referred to as limits, for AWS PrivateLink resources per Region for your account. 
+Name	                                                    Default	 Adjustable	                          Comments
+----------------------------------------------------    --------   ---------   ---------------------------------------------------------------------------------
+Interface and Gateway Load Balancer endpoints per VPC	       50	     Yes	   This is a combined quota for interface endpoints and Gateway Load Balancer endpoints
+
+Gateway VPC endpoints per Region	                           20	     Yes	    You can create up to 255 gateway endpoints per VPC
+
+VPC endpoint policy size	                         20,480 characters	No	     The size of a VPC endpoint policy includes white spaces
+
+
+##################The following considerations apply to traffic that passes through a VPC endpoint:################
+By default, each VPC endpoint can support a bandwidth of up to 10 Gbps per Availability Zone, 
+and automatically scales up to 100 Gbps. 
+The maximum bandwidth for a VPC endpoint, when distributing the load across all Availability Zones, 
+is the number of Availability Zones multiplied by 100 Gbps. 
+If your application needs higher throughput, contact AWS support.
+
+The maximum transmission unit (MTU) of a network connection is the size, in bytes, 
+of the largest permissible packet that can be passed through a VPC endpoint. 
+The larger the MTU, the more data that can be passed in a single packet. 
+A VPC endpoint supports an MTU of 8500 bytes.
+Packets with a size larger than 8500 bytes that arrive at the VPC endpoint are dropped.
+
+Path MTU Discovery (PMTUD) is not supported. 
+VPC endpoints do not generate the following 
+ICMP message: Destination Unreachable: Fragmentation needed and Don't Fragment was Set (Type 3, Code 4).
+
+VPC endpoints enforce Maximum Segment Size (MSS) clamping for all packets.
+####################################################################################################################
+vpc----endpoint----create endpoint----service category----aws services----service name----com.amazonaws.us-east-1.secretsmanager
+owner:amazon  type:interface------>vpc(default)----enable dns name(in VPC: enable dns hostnames, enable dns support)----------
+---dns record type(ipv4) (ipv4/ipv6/dual stack/service defined)-------subnet (select)(each subnet one endpoint n/w interface)------
+----ip type(ipv4)(ipv4/ipv6/dual stack)------sg(default)----policy (full aceess[any aws service accessed by endpoint interface or custom)-----
+------create endpoint
+
+endpoint1
+vpce-0fb4840dc904e0876	vpc-00817a61882d246a5	com.amazonaws.us-east-1.secretsmanager	Available 	(4 network interfaces)  	(4 subnets)   (Route table	–)
+
+Endpoint ID
+vpce-0fb4840dc904e0876
+
+VPC ID
+vpc-00817a61882d246a5
+
+DNS record IP type
+ipv4
+
+Private DNS only inbound resolver endpoint
+–
+
+Status
+Available
+
+Status message
+–
+
+IP address type
+ipv4
+
+Service name
+com.amazonaws.us-east-1.secretsmanager
+
+DNS names
+vpce-0fb4840dc904e0876-cayjkgce.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+vpce-0fb4840dc904e0876-cayjkgce-us-east-1d.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+vpce-0fb4840dc904e0876-cayjkgce-us-east-1b.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+vpce-0fb4840dc904e0876-cayjkgce-us-east-1c.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+vpce-0fb4840dc904e0876-cayjkgce-us-east-1a.secretsmanager.us-east-1.vpce.amazonaws.com
+- (Z7HUB22UULQXV)
+secretsmanager.us-east-1.amazonaws.com
+- (Z05068231EVY1X718TJWT)
+
+
+Endpoint type
+Interface
+
+Private DNS names enabled
+Yes
+
+Private DNS names
+secretsmanager.us-east-1.amazonaws.com
+-----------------------------------------------------------------------------------------------------------
+vpc id: vpc-00817a61882d246a5     DNS hostnames: enabled DNS        resolution: enabled
+-----------------------------------------------------------------------------------------------------------
+
+We create an endpoint network interface in each subnet that you select.
+
+DNS name
+Enable DNS nameInfo
+Associates a private hosted zone with the VPC that contains a record set that enables 
+you to leverage Amazon’s private network connectivity to the service while making requests to the service’s 
+default public endpoint DNS name. 
+To use this feature, ensure that the attributes ‘Enable DNS hostnames’ and ‘Enable DNS support’ are enabled for your VPC.
+
+
+PolicyInfo
+VPC endpoint policy controls access to the service.
+
+
+default endpoint policy:--
+{
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "*",
+            "Resource": "*"
+        }
+    ]
+}
+
+NOTE:
+Gateway endpoint (for s3 and dynamodb)
+
+Restrict access to a specific bucket
+{
+  "Sid": "AccessToSpecificBucket",
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": [
+     "s3:ListBucket",
+     "s3:GetObject",
+     "s3:PutObject"
+  ],
+  "Resource": [
+     "arn:aws:s3:::bucket_name",
+     "arn:aws:s3:::bucket_name/*"
+  ]
+}
+
+
+Restrict access to a specific endpoint
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Sid": "AccessFromSpecificEndpoint",
+         "Effect": "Deny",
+         "Action": "dynamodb:*",
+         "Resource": "arn:aws:dynamodb:region:account-id:table/*",
+         "Condition": { 
+            "StringNotEquals" : { 
+               "aws:sourceVpce": "vpce-11aa22bb" 
+            } 
+         }
+      }
+   ]
+}
+
+
+AWS Policy Generator
+Select Type of Policy: vpc endpoint policy
+effect: allow
+principal: *
+aws service: s3/dynamodb
+action: *
+arn s3:  arn:aws:s3:::somesh123456
+
+{
+  "Id": "Policy1691049024304",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1691049020400",
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::somesh123456",
+      "Principal": "*"
+    }
+  ]
+}
+--------------------------------------------------------------------------------------------------------------------
+
