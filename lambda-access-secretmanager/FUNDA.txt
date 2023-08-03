@@ -1,0 +1,19 @@
+unfortunately, a lambda function in a VPC does not have internet access nor public IP. From docs:
+
+Connecting a function to a public subnet does not give it internet access or a public IP address.
+
+Therefore, when you use boto3:
+
+    client = session.client(
+        service_name='secretsmanager',
+        region_name=region_name
+    )
+to connect to the Secrets Manager it times out, because boto3 can't connect to the Secrets Manager manager from the VPC.
+
+There are two ways to rectify this:
+
+Place your function in a private subnet and use NAT gateway/instance with correctly configured route tables to provide the internet access, 
+and consequently, to the Secrets Manager.
+
+Setup VPC interface endpoint for Secrets Manager in a private subnet. 
+This way your lambda function will be able to connect to the Secrets Manager using the endpoint, without needing the internet.
