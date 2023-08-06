@@ -5,4 +5,112 @@ pattern:
   "detail-type": ["EC2 Instance State-change Notification"]
 }
 
-eventbridge---->step fun---->lambda
+eventbridge---->step fun---->lambda1------lambda2------sns
+
+i/p: by eventbridge (ec2 event change notification)
+
+{
+  "version": "0",
+  "id": "d39cc2ca-fc02-133b-bfed-5d68ee30a356",
+  "detail-type": "EC2 Instance State-change Notification",
+  "source": "aws.ec2",
+  "account": "291222035571",
+  "time": "2023-08-06T15:15:04Z",
+  "region": "us-east-1",
+  "resources": [
+    "arn:aws:ec2:us-east-1:291222035571:instance/i-07e21a1f2841ee489"
+  ],
+  "detail": {
+    "instance-id": "i-07e21a1f2841ee489",
+    "state": "stopping"
+  }
+}
+
+lambda1:
+
+import json
+import boto3
+
+client = boto3.client('ec2')
+
+def lambda_handler(event, context):
+    print("event logged")
+    x= event["detail"]
+    return x
+    
+    
+o/p:
+
+{
+  "instance-id": "i-07e21a1f2841ee489",
+  "state": "running"
+}
+-------------------------------------------------------------
+lambda2:
+i/p:
+{
+  "instance-id": "i-07e21a1f2841ee489",
+  "state": "running"
+}
+
+import json
+import boto3
+client = boto3.client('ec2')
+
+def lambda_handler(event, context):
+    print(type(event))
+    
+    print(type(event))
+    
+    
+    x = event["instance-id"]
+    print(type(x))
+    print(x) 
+    
+    
+    return x
+
+o/p:
+
+"i-07e21a1f2841ee489"
+--------------------------------------------------------------
+sns:
+i/p:
+"i-07e21a1f2841ee489"
+
+o/p:
+{
+  "MessageId": "b9acaed7-2b3c-5ffe-a73e-f39eed12bc6b",
+  "SdkHttpMetadata": {
+    "AllHttpHeaders": {
+      "x-amzn-RequestId": [
+        "6395f6f1-8795-517c-a8dc-abb841bb72e9"
+      ],
+      "Content-Length": [
+        "294"
+      ],
+      "Date": [
+        "Sun, 06 Aug 2023 16:01:49 GMT"
+      ],
+      "Content-Type": [
+        "text/xml"
+      ]
+    },
+    "HttpHeaders": {
+      "Content-Length": "294",
+      "Content-Type": "text/xml",
+      "Date": "Sun, 06 Aug 2023 16:01:49 GMT",
+      "x-amzn-RequestId": "6395f6f1-8795-517c-a8dc-abb841bb72e9"
+    },
+    "HttpStatusCode": 200
+  },
+  "SdkResponseMetadata": {
+    "RequestId": "6395f6f1-8795-517c-a8dc-abb841bb72e9"
+  }
+}
+-------------------------------------------------------
+
+
+
+   
+    
