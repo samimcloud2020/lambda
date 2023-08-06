@@ -5,4 +5,4 @@ pattern:
   "detail-type": ["EC2 Instance State-change Notification"]
 }
 
-lambda:ec2 (target)
+eventbridge---->step fun---->lambda
